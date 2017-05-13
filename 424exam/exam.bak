@@ -1,0 +1,13 @@
+#lang racket
+
+;; 2015A
+(define reverse-with-count (lambda (xs ns) (reverse (reverse-with-count-aux xs ns))))
+
+(define reverse-with-count-aux
+  (lambda (xs ns)
+    (if (null? xs)
+        '()
+        (if (= 0 (car ns))
+            (reverse-with-count-aux (cdr xs) (cdr ns))
+            (cons (car xs)
+                  (reverse-with-count-aux xs (cons (- (car ns) 1) (cdr ns))))))))

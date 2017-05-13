@@ -1,0 +1,45 @@
+#lang racket
+
+;;; Exam question.
+(define pick-elements
+  (lambda (p li)
+    (if (< (length li) 2)
+        null
+        (if (p (car li))
+            (cons (cadr li) (pick-elements p (cdr li)))
+            (pick-elements p (cdr li))))))
+
+;(pick-elements zero? (list 0 1 2 0 1))
+
+;;; Flat recursion.
+(define multi-assoc
+  (lambda (obj alist)
+    (if (null? alist)
+        #f
+        (if (is-match obj (car alist))
+            (car alist)
+            (multi-assoc obj (cdr alist))))))
+
+(define is-match
+  (lambda (obj pair)
+    (equal? obj (car pair))))
+
+;(multi-assoc 3 (list (list 0 1) (list 2 3)))
+
+;;; Recursion.
+(define filter
+  (lambda (p li)
+    (if (null? li)
+        null
+        (if (p (car li))
+            (cons (car li) (filter p (cdr li)))
+            (filter p (cdr li))))))
+
+; (filter odd? '(1 2 3 4 5 6 7 8 9))
+
+;;; Strings.
+(define variable?
+  (lambda (obj)
+    (and (symbol? obj)
+         (equal? '*
+                 (string-ref (symbol->string obj) 0)))))
